@@ -1,59 +1,55 @@
-import { useEffect, useState } from 'react';
-import AddCounter from './AddCounter';
-import './App.css';
-import Counter from './Counter';
-import { decrement, increment, store } from './Redux';
-
+import { useEffect, useState } from 'react'
+import './App.css'
+import Counter from './components/Counter'
 function App() {
-  const [components, setComponents] = useState([<Counter />])
-  const [values,setValues] = useState([0])
+  const [counterList, setCounterList] = useState([])
+  const [reset, setReset] = useState(false)
 
-  const [state , setState]= useState('')
-  const [state1, setState1] = useState('')
-
-  const render=()=>{
-  const state = store.getState()
-  setState(state.value)
+  const addCounter = () => {
+    setCounterList(
+      counterList.concat(<Counter value={counterList.length + 2} />),
+    )
   }
-  const render1=()=>{
-  const state1 = store.getState()
-  setState1(state1.value)
-  }
-
-  store.subscribe(render)
-  store.subscribe(render1)
-
-  useEffect(()=>{
-      render()
-      render1()
-  },[])
-
-  const value=5
- 
-
-  
- 
-  const addComponent=()=>{
-    setComponents([...components],<Counter />)
+  const resetCounter = () => {
+    console.log('reset')
   }
   return (
     <div className="w-screen h-screen p-10 bg-gray-100 text-slate-700">
-   
       <h1 className="max-w-md mx-auto text-center text-2xl font-bold">
-          Simple Counter Application
+        Simple Counter Application
       </h1>
-      <div className="max-w-lg mx-auto mt-10 space-y-5 flex">
-      <div>
-        <Counter increment={increment} decrement={decrement} state={state} incrementValue={value} decrementValue={value} />
-      </div>
-        <AddCounter  func={addComponent} />
-      </div>
-      <div className="max-w-lg mx-auto mt-10 space-y-5 flex">
-        {/*<Counter increment={increment} decrement={decrement} state={state1} incrementValue={addition1} decrementValue={substraction1} />*/}
-      
+
+      <div className="flex flex-row">
+        <div className="mx-auto mt-10 space-y-5 flex flex-col">
+          <Counter value={1} />
+          {counterList}
         </div>
-   </div>
+
+        <div className="mt-10">
+          <div className=" p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow">
+            <div className="flex space-x-3">
+              <button
+                className="bg-indigo-600 text-white px-3 py-2 rounded shadow"
+                id="addCounter"
+                onClick={addCounter}
+              >
+                Add Counter
+              </button>
+              <button
+                className="bg-red-600 text-white px-3 py-2 rounded shadow"
+                id="reset"
+                onClick={resetCounter}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-lg mx-auto mt-10 space-y-5 flex"></div>
+    </div>
   )
 }
 
-export default App;
+export default App
