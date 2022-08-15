@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 const Counter = ({ value }) => {
   const [count, setCount] = useState(0)
+
   const increment = () => {
     setCount((previousValue) => previousValue + value)
   }
